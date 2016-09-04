@@ -1,0 +1,59 @@
+<!-- header-->
+<header class="page-header">
+    <h1>Ma vidéothèque <small>{{movies.length}} films</small>
+        <button class="btn btn-primary" bs-modal="'partials/movie-form-modal.html'" ng-controller="movieFormController">Ajouter un film</button>
+    </h1>
+</header>
+
+<!-- barre d'actions -->
+<section class="well form-inline">
+    <input class="span5" type="text" ng-model="search" placeholder="Rechercher">
+    <section class="pull-right">
+        <button class="btn btn-success" ng-click="tableView = !tableView"><i ng-class="{'icon-th-list icon-white' : tableView == false , 'icon-th icon-white' : tableView == true }"></i></button>
+        <button class="btn btn-info" ng-click="trier('releaseYear')">Trier par année</button>
+        <button class="btn btn-info" ng-click="trier('title')">Trier par titre</button>
+    </section>
+</section>
+
+
+<!-- liste des films -->
+<div ng-switch on="tableView" ng-init="tableView = false">
+<ul class="thumbnails" ng-switch-when="false">
+    <li ng-repeat="movie in movies | orderBy:tri:reverse | filter : search " class="span12">
+        <img ng-src="{{movie.poster | poster}}" class="span2">
+        <div class="caption">
+            <h3>{{movie.title | uppercase}}
+                <button class="btn btn-danger" ng-click="deleteMovie($index)"><i class="icon-trash icon-white"></i></button>
+                <a class="btn btn-info" href="#/movies/edit/{{movie.id}}"><i class="icon-edit icon-white"></i></a>
+            </h3>
+            <editable label="Année de sortie" text="movie.releaseYear"></editable>
+            <editable label="Réalisateurs" text="movie.directors"></editable>
+            <p><b>Acteurs : </b>{{movie.actors}}</p>
+            <p><b>Synopsis : </b>{{movie.synopsis}}</p>
+            <p><b>Vu le : </b> {{movie.lastViewDate | date:'fullDate'}}</p>
+            <p><b>Prix : </b> {{movie.price | currency }}</p>
+            <p><b>Note : </b> {{movie.rate | stars}}</p>
+        </div>
+    </li>
+</ul>
+<table class="table table-striped" ng-switch-default>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Titre</th>
+        <th>Réalisateur</th>
+        <th>Année de sortie</th>
+        <th>Note</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="movie in movies | orderBy:tri:reverse | filter : search ">
+        <td>{{$index + 1}}</td>
+        <td><editable text="movie.title"></editable></td>
+        <td>{{movie.directors}}</td>
+        <td>{{movie.releaseYear}}</td>
+        <td>{{movie.rate | stars}}</td>
+    </tr>
+    </tbody>
+</table>
+</div>
