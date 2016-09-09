@@ -1,0 +1,33 @@
+{
+  "name": "AngularMovie",
+  "version": "1.0.0",
+  "description": "Formation SeirSchool Angular",
+  "author": "Thierry LAU <thierlau@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sfeir/angularmovie"
+  },
+  "bugs": {
+    "url": "https://github.com/Sfeir/angularmovieissues"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "colors": "^1.0.3",
+    "body-parser": "^1.9.0",
+    "express": "^4.9.7",
+    "serve-static": "^1.6.4",
+    "path": "*",
+    "lodash": "^2.4.1"
+  },
+  "devDependencies": {
+    "karma": "^0.12.24",
+    "karma-chrome-launcher": "^0.1.5",
+    "karma-jasmine": "^0.1.5",
+    "mocha": "^2.0.1",
+    "karma-cli": "0.0.4"
+  }
+}
