@@ -1,4 +1,7 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Web.MoviesApi.Models
 {
@@ -6,18 +9,44 @@ namespace Web.MoviesApi.Models
     {
         public Movie() {
 
-        }      
+        }    
 
-        public int Id { get; set; }
+        [Required]
+        [BsonId(IdGenerator = typeof(MongoDB.Bson.Serialization.IdGenerators.GuidGenerator))]
+        public Guid Id { get; set; }
+
+        [Required]
+        [StringLength(60, MinimumLength = 3)]
+        [BsonElement("title")]
         public string Title { get; set; }
-        public string Category { get; set; }   
+
+        [BsonElement("category")]
+        public string Category { get; set; } 
+
+        [BsonElement("releaseYear")]  
         public int ReleaseYear { get; set; }
+
+        [BsonElement("poster")]
         public string Poster { get; set; }
+
+        [BsonElement("directors")]
         public string Directors { get; set; }
+
+        [BsonElement("actors")]
         public string Actors { get; set; }
+
+        [BsonElement("synopsis")]
         public string Synopsis { get; set; }
+
+        [BsonElement("rate")]
         public int Rate { get; set; }
+
+        [BsonElement("lastViewDate")]
         public DateTime LastViewDate { get; set; }
-        public decimal Price { get; set; }
+
+        [BsonElement("price")]
+        [Range(1, 100)]
+        [DataType(DataType.Currency)]
+        public decimal? Price { get; set; }
     }
 }
