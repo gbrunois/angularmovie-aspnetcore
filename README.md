@@ -5,12 +5,16 @@ Librairie de films développée avec AngularJS (fork [https://github.com/Sfeir/a
 
 
 ## Pré-requis
-* Installer Docker.
+* Installer docker
+* NPM (brew install npm , for OS X users. Windows users can Download NPM as part of Node.JS)
+* Bower (npm install -g bower)
+
 
 ## Installation
 * Récupérer les sources (<code>git clone git@github.com:gbrunois/angularmovie-aspnetcore.git</code>)
 * Ouvrir le terminal
 * Se placer à la racine du projet
+* Exécuter <code>npm install</code> et <code>bower install</code>
 * Exécuter <code>docker-compose build</code> pour construire l'image docker
 
 

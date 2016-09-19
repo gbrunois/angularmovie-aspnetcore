@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Web.MoviesApi.Repositories.Interface;
 using Web.MoviesApi.Repositories.Implements;
+using System.IO;
+using Microsoft.Extensions.FileProviders;
 
 namespace Web.MoviesApi
 {
@@ -34,23 +36,27 @@ namespace Web.MoviesApi
             loggerFactory.AddDebug();
 
             //for angular, We need to serve the index.html to the client, if there was an 404 error, on requests without extensions
-            // app.Use(async (context, next) =>
-            // {
-            //     await next();
+            app.Use(async (context, next) =>
+            {
+                await next();
 
-            //     if (context.Response.StatusCode == 404
-            //         && !Path.HasExtension(context.Request.Path.Value))
-            //     {
-            //         context.Request.Path = "/index.html";
-            //         await next();
-            //     }
-            // });
+                if (context.Response.StatusCode == 404
+                    && !Path.HasExtension(context.Request.Path.Value))
+                {
+                    context.Request.Path = "/index.html";
+                    await next();
+                }
+            });
 
-            //app.UseDefaultFiles();
+            //set default document
+            app.UseDefaultFiles("/index.html");
 
             // serve static files like JavaScripts, CSS styles, images, or even HTML files
-            app.UseStaticFiles();
-
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                //override default directory
+                FileProvider = new CompositeFileProvider(new PhysicalFileProvider(Path.Combine(env.WebRootPath, "app")))
+            });
             app.UseMvc();
         }
     }

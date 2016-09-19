@@ -25,8 +25,8 @@
         </div>
         <div class="control-group" ng-class="{error : movieForm.textareaSynopsis.$error.maxlength}">
             <label class="control-label">Synopsis :</label>
-            <input type="text" ng-model="movie.synopsis" name="textareaSynopsis"  ng-maxlength="140">
-            <span class="help-block" ng-show="movieForm.textareaSynopsis.$error.maxlength">140 caractères maximum</span>
+            <input type="text" ng-model="movie.synopsis" name="textareaSynopsis"  ng-maxlength="500">
+            <span class="help-block" ng-show="movieForm.textareaSynopsis.$error.maxlength">500 caractères maximum</span>
         </div>
         <div class="control-group" ng-class="{error : movieForm.inputRate.$error.min || movieForm.inputRate.$error.max}">
             <label class="control-label">Note :</label>

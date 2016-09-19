@@ -17,11 +17,11 @@ angularMovieApp.filter('stars', function () {
 
 
 angularMovieApp.filter('poster', function () {
-    return function(posterUrl) {
-        if(!posterUrl){
+    return function(data) {
+        if(!data){
             return "img/no-poster.jpg";
         } else {
-            return posterUrl;
+            return 'data:image/jpeg;base64,' + data;
         }
     };
 });
