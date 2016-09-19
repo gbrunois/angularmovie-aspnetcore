@@ -6,15 +6,6 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "postinstall": "bower install",
-    "test": "karma start",
-    "e2e": "protractor protractor.conf.js"
-  },
-  "devDependencies": {
-    "karma": "^0.12.24",
-    "karma-chrome-launcher": "^0.1.5",
-    "karma-jasmine": "^0.1.5",
-    "mocha": "^2.0.1",
-    "karma-cli": "0.0.4"
-  }
+    "postinstall": "bower install"      
+    }
 }

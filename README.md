@@ -14,14 +14,14 @@ Librairie de films développée avec AngularJS (fork [https://github.com/Sfeir/a
 * Récupérer les sources (<code>git clone git@github.com:gbrunois/angularmovie-aspnetcore.git</code>)
 * Ouvrir le terminal
 * Se placer à la racine du projet
-* Exécuter <code>npm install</code> et <code>bower install</code>
+* Exécuter <code>npm install</code>
 * Exécuter <code>docker-compose build</code> pour construire l'image docker
 
 
 ## Démarrage de l'application
 * Exécuter <code>docker-compose up -d</code> pour exécuter l'image docker
 * Exécuter <code>docker-compose up -d --build</code> pour metre à jour puis exécuter l'image docker
-* Accéder à l'application via l'adresse [http://192.168.99.100:5000/app/index.html](http://192.168.99.100:5000/app/index.html)
+* Accéder à l'application via l'adresse [http://192.168.99.100:5000](http://192.168.99.100:5000)
 
 ## Troubleshootings
 
