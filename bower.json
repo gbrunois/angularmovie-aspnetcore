@@ -1,11 +1,11 @@
 {
-  "name": "angularmovie",
+  "name": "angularmovie-aspnetcore",
   "version": "1.0.0",
-  "homepage": "https://github.com/lauterry/angularmovie",
+  "homepage": "https://github.com/gbrunois/angularmovie-aspnetcore",
   "authors": [
-    "LAU Thierry <thierlau@gmail.com>"
+    "Geoffrey Brunois"
   ],
-  "description": "Live coding & Hands On AngularJS",
+  "description": "Live coding & Hands On ASP.NET Core",
   "license": "MIT",
   "private": true,
   "ignore": [
