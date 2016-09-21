@@ -4,9 +4,8 @@ using MongoDB.Driver;
 using MongoDB.Bson;
 using System;
 using System.Threading.Tasks;
-using Web.MoviesApi.Repositories.Interface;
 
-namespace Web.MoviesApi.Repositories.Implements
+namespace Web.MoviesApi.Repositories
 {
     public class MoviesRepository : IMoviesRepository
     {

@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Web.MoviesApi.Models;
 
-namespace Web.MoviesApi.Repositories.Interface
+namespace Web.MoviesApi.Repositories
 {
     /// <summary>
     /// Interface for movies repository

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Web.MoviesApi.Models;
-using Web.MoviesApi.Repositories.Interface;
+using Web.MoviesApi.Repositories;
 
 namespace Web.MoviesApi.Controllers
 {

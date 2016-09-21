@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Web.MoviesApi.Repositories.Interface;
-using Web.MoviesApi.Repositories.Implements;
+using Web.MoviesApi.Repositories;
 using System.IO;
 using Microsoft.Extensions.FileProviders;
 

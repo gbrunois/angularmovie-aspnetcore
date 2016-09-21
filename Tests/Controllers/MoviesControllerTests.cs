@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Web.MoviesApi.Controllers;
 using Web.MoviesApi.Models;
-using Web.MoviesApi.Repositories.Interface;
+using Web.MoviesApi.Repositories;
 using Xunit;
 
 namespace Web.MoviesApi.Tests.Controllers
