@@ -16,7 +16,7 @@ namespace Web.MoviesApi.Models
         public Guid Id { get; set; }
 
         [Required]
-        [StringLength(60, MinimumLength = 3)]
+        [StringLength(100, MinimumLength = 1)]
         [BsonElement("title")]
         public string Title { get; set; }
 
@@ -35,6 +35,7 @@ namespace Web.MoviesApi.Models
         [BsonElement("actors")]
         public string Actors { get; set; }
 
+        [StringLength(500)]
         [BsonElement("synopsis")]
         public string Synopsis { get; set; }
 
