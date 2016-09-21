@@ -4,29 +4,35 @@ using MongoDB.Driver;
 using MongoDB.Bson;
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 
-namespace Web.MoviesApi.Repositories
+namespace Web.MoviesApi.Repositories.MongoDB
 {
     public class MoviesRepository : IMoviesRepository
     {
         private IMongoDatabase _dbInstance;
         private const string MoviesCollection = "movies";
 
-        public MoviesRepository()
+        public MoviesRepository(IOptions<MongoSettings> mongoSettings)
         {
-            _dbInstance = CreateDatabaseConnection();
+            _dbInstance = CreateDatabaseConnection(mongoSettings);
         }
 
-        private IMongoDatabase CreateDatabaseConnection()
+        private IMongoDatabase CreateDatabaseConnection(IOptions<MongoSettings> mongoSettings)
         {
+            var configuration = mongoSettings.Value;
             // or use a connection string
             var settings = new MongoClientSettings()
             {
-                Credentials = new[] { MongoCredential.CreateCredential("angularmovies", "angularUser", "password") },
-                Server = new MongoServerAddress("192.168.99.100", 27017)
+                Credentials = new[] {
+                    MongoCredential.CreateCredential(
+                        configuration.DatabaseName,
+                        configuration.Username,
+                        configuration.Password) },
+                Server = MongoServerAddress.Parse(configuration.ConnectionString)
             };
             var client = new MongoClient(settings);
-            return client.GetDatabase("angularmovies");
+            return client.GetDatabase(configuration.DatabaseName);
         }
 
         public async Task<Movie[]> GetMovies()
