@@ -1,6 +1,8 @@
 AngularMovie ASP.NET Core
 =========================
 
+[![Build Status](https://travis-ci.org/gbrunois/angularmovie-aspnetcore.svg?branch=master)](https://travis-ci.org/gbrunois/angularmovie-aspnetcore)
+
 Librairie de films développée avec AngularJS (fork [https://github.com/Sfeir/angularmovie-300](https://github.com/Sfeir/angularmovie-300)) et servie avec ASP.NET Core. Les données sont stockées dans une base MongoDB
 
 
