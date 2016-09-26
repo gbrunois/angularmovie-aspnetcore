@@ -1,4 +1,13 @@
 language: csharp
+sudo: required
+dist: trusty
+
+before_install:
+  - sudo sh -c 'echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list' 
+  - sudo apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893
+  - sudo apt-get update
+  - sudo apt-get -y install dotnet-dev-1.0.0-preview2-003121
+  - dotnet --info
 
 matrix:
   include:
@@ -10,10 +19,10 @@ matrix:
       osx_image: xcode7.2
       dotnet: 1.0.0-preview2-003121
 
-script:
-  # Run a new console app
-  - mkdir -p "test/test-dotnet-new" && pushd "test/test-dotnet-new"
-  - dotnet new
+install:
   - dotnet restore
-  - dotnet --verbose run a b
-  - popd
+  - dotnet build
+
+script:
+  - dotnet build
+  - dotnet test
