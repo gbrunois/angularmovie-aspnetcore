@@ -3,10 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Web.MoviesApi.Repositories;
-using Web.MoviesApi.Repositories.MongoDB;
 using System.IO;
 using Microsoft.Extensions.FileProviders;
+using Web.MoviesApi.Middleware;
 
 namespace Web.MoviesApi
 {
@@ -17,10 +16,8 @@ namespace Web.MoviesApi
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                .SetBasePath(env.ContentRootPath);
 
-            builder.AddEnvironmentVariables();
             Configuration = builder.Build();
         }
 
@@ -29,35 +26,14 @@ namespace Web.MoviesApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddOptions();
-            services.Configure<MongoSettings>(Configuration.GetSection("Mongo"));
-
             services.AddMvc();
-
-            services.AddTransient<IMoviesRepository, MoviesRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
-
-
-            //for angular, We need to serve the index.html to the client, if there was an 404 error, on requests without extensions
-            app.Use(async (context, next) =>
-            {
-                await next();
-
-                if (context.Response.StatusCode == 404
-                    && !Path.HasExtension(context.Request.Path.Value))
-                {
-                    context.Request.Path = DEFAULT_FILENAME;
-                    await next();
-                }
-            });
-
+            app.UseMiddleware<SPAMiddleware>(DEFAULT_FILENAME);
+            
             //set default document
             app.UseDefaultFiles(DEFAULT_FILENAME);
 
