@@ -30,5 +30,6 @@ namespace Web.MoviesApi.Models
         public DateTime LastViewDate { get; set; }
 
         public decimal? Price { get; set; }
+        
     }
 }
