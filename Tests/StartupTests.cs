@@ -3,6 +3,8 @@ using System.Net;
 using System.Net.Http;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
+using Web.MoviesApi.Repositories;
 using Xunit;
 
 namespace Web.MoviesApi.Tests
@@ -32,6 +34,24 @@ namespace Web.MoviesApi.Tests
 
             // Assert
             Assert.Equal(responseMessage.StatusCode, HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public void Should_Resolve_IMoviesRepository()
+        {
+            // Arrange
+            var env = new Microsoft.AspNetCore.Hosting.Internal.HostingEnvironment();
+            env.ContentRootPath = Directory.GetCurrentDirectory();
+            
+            Startup startup = new Startup(env);
+            var serviceCollection = new ServiceCollection();
+            startup.ConfigureServices(serviceCollection);
+
+            // Act
+            IMoviesRepository moviesRepository = (IMoviesRepository)serviceCollection.BuildServiceProvider().GetService(typeof(IMoviesRepository));
+
+            // Assert
+            Assert.NotNull(moviesRepository);
         }
     }
 }

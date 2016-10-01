@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Web.MoviesApi.Middleware;
+using Web.MoviesApi.Repositories;
 
 namespace Web.MoviesApi
 {
@@ -27,6 +28,8 @@ namespace Web.MoviesApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            // TODO configure DI here
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

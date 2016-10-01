@@ -1,59 +1,58 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Web.MoviesApi.Models;
+using Web.MoviesApi.Repositories;
 
 namespace Web.MoviesApi.Controllers
 {
-    /// <summary>
-    /// Movies Controller.
-    /// </summary>
     [Route("server/api/[controller]")]
     public class MoviesController : Controller
     {
-        private Movie[] _movies;
-
-        public MoviesController()
+        public MoviesController(IMoviesRepository moviesDAO)
         {
-            // For this step, we work with fixed values
-            _movies = new Movie[] {
-                new Movie() { Id = "1", Title = "Titre 1" },
-                new Movie() { Id = "2", Title = "Titre 2" },
-                new Movie() { Id = "3", Title = "Titre 3" },
-            };
+
         }
 
         // GET server/api/movies
         [HttpGet]
-        public IEnumerable<Movie> Get()
+        public Task<IEnumerable<Movie>> Get()
         {
-            return GetMovies();
+            // TODO Implement
+            throw new NotImplementedException();
         }
 
         // GET server/api/movies/:id
         [HttpGet("{id}")]
-        public Movie Get(string id)
+        public Task<IActionResult> Get(string id)
         {
-            return GetMovie(id);
+            // TODO Implement
+            throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Return all movies
-        /// </summary>
-        /// <returns></returns>
-        public Movie[] GetMovies()
+        // POST server/api/movies
+        [HttpPost]
+        public Task<IActionResult> Post([FromBody]Movie value)
         {
-            return _movies;
+            // TODO Implement
+            throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Return a movie identified by id or null if not exists
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public Movie GetMovie(string id)
+        // PUT server/api/movies
+        [HttpPut]
+        public Task<IActionResult> Put([FromBody]Movie value)
         {
-            return _movies.Where(movie => movie.Id.ToString() == id).FirstOrDefault();
+            // TODO Implement
+            throw new NotImplementedException();
+        }
+
+        // DELETE server/api/movies/:id
+        [HttpDelete("{id}")]
+        public void Delete(string id)
+        {
+            // TODO Implement
+            throw new NotImplementedException();
         }
     }
 }
