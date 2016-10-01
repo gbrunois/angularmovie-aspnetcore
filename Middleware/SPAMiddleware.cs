@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Web.MoviesApi.Middleware
 {
@@ -26,9 +27,14 @@ namespace Web.MoviesApi.Middleware
         {
             var request = context.Request;
 
-            //TODO
-            //if StatusCode is 404 and Request.Path has no extension, then set Request.Path to defaultFilename
-            //don't forget to invoke the next method
+            await _next.Invoke(context);
+
+            if (context.Response.StatusCode == 404
+                && !Path.HasExtension(context.Request.Path.Value))
+            {
+                context.Request.Path = _defaultFilename;
+                await _next.Invoke(context);
+            }
         }
     }
 }
