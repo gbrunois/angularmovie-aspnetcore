@@ -32,17 +32,15 @@ namespace Web.MoviesApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.UseMiddleware<SPAMiddleware>(DEFAULT_FILENAME);
+            //TODO add SPAMiddleware
             
             //set default document
             app.UseDefaultFiles(DEFAULT_FILENAME);
 
             // serve static files like JavaScripts, CSS styles, images, or even HTML files
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                //override default directory
-                FileProvider = new CompositeFileProvider(new PhysicalFileProvider(Path.Combine(env.WebRootPath, "app")))
-            });
+            // TODO add static files middleware here. use StaticFileOptions with CompositeFileProvider. 
+            // env.WebRootPath is the path to wwwroot
+            // all static files to serve are in app directory
 
             app.UseMvc();
         }
