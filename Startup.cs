@@ -29,7 +29,7 @@ namespace Web.MoviesApi
         {
             services.AddMvc();
 
-            // TODO configure DI here
+            services.AddTransient<IMoviesRepository, MoviesRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

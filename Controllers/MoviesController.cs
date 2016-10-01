@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Web.MoviesApi.Models;
@@ -10,49 +11,61 @@ namespace Web.MoviesApi.Controllers
     [Route("server/api/[controller]")]
     public class MoviesController : Controller
     {
+        private readonly IMoviesRepository _moviesDAO;
+
         public MoviesController(IMoviesRepository moviesDAO)
         {
-
+            _moviesDAO = moviesDAO;
         }
 
         // GET server/api/movies
         [HttpGet]
-        public Task<IEnumerable<Movie>> Get()
+        public async Task<IEnumerable<Movie>> Get()
         {
-            // TODO Implement
-            throw new NotImplementedException();
+            return await _moviesDAO.GetMovies();
         }
 
         // GET server/api/movies/:id
         [HttpGet("{id}")]
-        public Task<IActionResult> Get(string id)
+        public async Task<IActionResult> Get(string id)
         {
-            // TODO Implement
-            throw new NotImplementedException();
+            var movie = await _moviesDAO.GetMovie(id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            return Ok(movie);
         }
 
         // POST server/api/movies
         [HttpPost]
-        public Task<IActionResult> Post([FromBody]Movie value)
+        public async Task<IActionResult> Post([FromBody]Movie value)
         {
-            // TODO Implement
-            throw new NotImplementedException();
+            await _moviesDAO.InsertMovie(value);
+            return Ok(value);
         }
 
         // PUT server/api/movies
         [HttpPut]
-        public Task<IActionResult> Put([FromBody]Movie value)
+        public async Task<IActionResult> Put([FromBody]Movie value)
         {
-            // TODO Implement
-            throw new NotImplementedException();
+            Movie movie = await _moviesDAO.GetMovie(value.Id);
+            if (movie != null)
+            {
+                await _moviesDAO.UpdateMovie(value);
+                return Ok();
+            }
+            else
+            {
+                return new StatusCodeResult(304);
+            }
         }
 
         // DELETE server/api/movies/:id
         [HttpDelete("{id}")]
-        public void Delete(string id)
+        public async void Delete(string id)
         {
-            // TODO Implement
-            throw new NotImplementedException();
+            await _moviesDAO.DeleteMovie(id);
         }
     }
 }
