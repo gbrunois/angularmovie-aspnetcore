@@ -6,8 +6,9 @@ AngularMovie ASP.NET Core
 * Exécuter <code>dotnet test</code> pour lancer les tests
 * Exécuter <code>dotnet run</code> pour lancer le serveur
 
-Write a middleware
-Serve static files
+Complete MoviesController file.
+All tests should be passed
+
 
 
 
