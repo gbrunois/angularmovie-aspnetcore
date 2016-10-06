@@ -7,9 +7,9 @@ namespace Web.MoviesApi.Controllers
 {
     /// <summary>
     /// Movies Controller.
-    /// TODO : Make a controller named MoviesController. 
     /// </summary>
-    public class MoviesController
+    [Route("server/api/[controller]")]
+    public class MoviesController : Controller
     {
         private Movie[] _movies;
 
@@ -24,10 +24,18 @@ namespace Web.MoviesApi.Controllers
         }
 
         // GET server/api/movies
-        // TODO Implement Get method
+        [HttpGet]
+        public IEnumerable<Movie> Get()
+        {
+            return GetMovies();
+        }
 
         // GET server/api/movies/:id
-        // TODO Implement Get method
+        [HttpGet("{id}")]
+        public Movie Get(string id)
+        {
+            return GetMovie(id);
+        }
 
         /// <summary>
         /// Return all movies
