@@ -13,7 +13,7 @@ Librairie de films développée avec AngularJS (fork [https://github.com/Sfeir/a
 
 
 ## Installation
-* Récupérer les sources (<code>git clone git@github.com:gbrunois/angularmovie-aspnetcore.git</code>)
+* Récupérer les sources (<code>git clone https://github.com/gbrunois/angularmovie-aspnetcore.git</code>)
 * Ouvrir le terminal
 * Se placer à la racine du projet
 * Exécuter <code>npm install</code>
