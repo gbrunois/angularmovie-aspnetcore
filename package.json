@@ -6,6 +6,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "postinstall": "bower install"      
-    }
+    "postinstall": "bower install"
+  },
+  "devDependencies": {
+    "bower": "^1.7.9"
+  }
 }
