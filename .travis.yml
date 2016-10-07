@@ -2,7 +2,15 @@ language: csharp
 sudo: required
 dist: trusty
 
+env:
+  DOCKER_COMPOSE_VERSION: 1.4.2
+
 before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
   - sudo sh -c 'echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list' 
   - sudo apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893
   - sudo apt-get update
@@ -16,3 +24,4 @@ install:
 script:
   - dotnet build
   - dotnet test
+  - docker-compose up -d
