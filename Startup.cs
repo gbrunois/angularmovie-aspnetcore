@@ -7,6 +7,7 @@ using Web.MoviesApi.Repositories;
 using Web.MoviesApi.Repositories.MongoDB;
 using System.IO;
 using Microsoft.Extensions.FileProviders;
+using Web.MoviesApi.Middleware;
 
 namespace Web.MoviesApi
 {
@@ -43,20 +44,7 @@ namespace Web.MoviesApi
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-
-
-            //for angular, We need to serve the index.html to the client, if there was an 404 error, on requests without extensions
-            app.Use(async (context, next) =>
-            {
-                await next();
-
-                if (context.Response.StatusCode == 404
-                    && !Path.HasExtension(context.Request.Path.Value))
-                {
-                    context.Request.Path = DEFAULT_FILENAME;
-                    await next();
-                }
-            });
+            app.UseMiddleware<SPAMiddleware>(DEFAULT_FILENAME);
 
             //set default document
             app.UseDefaultFiles(DEFAULT_FILENAME);

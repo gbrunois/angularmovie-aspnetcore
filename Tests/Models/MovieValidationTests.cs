@@ -44,6 +44,38 @@ namespace Web.MoviesApi.Tests.Models
             Assert.False(ValidateMovie(movie));
         }
 
+        [Fact]
+        public void PriceLess1ShouldBeInvalid()
+        {
+            var movie = NewMovie(); 
+            movie.Price = 0.99M;
+            Assert.False(ValidateMovie(movie));
+        }
+
+        [Fact]
+        public void PriceEqual1ShouldBeValid()
+        {
+            var movie = NewMovie(); 
+            movie.Price = 1M;
+            Assert.True(ValidateMovie(movie));
+        }
+
+        [Fact]
+        public void PriceMore100ShouldBeInvalid()
+        {
+            var movie = NewMovie(); 
+            movie.Price = 100.01M;
+            Assert.False(ValidateMovie(movie));
+        }
+
+        [Fact]
+        public void PriceEqual100ShouldBeValid()
+        {
+            var movie = NewMovie(); 
+            movie.Price = 100M;
+            Assert.True(ValidateMovie(movie));
+        }
+
         private bool ValidateMovie(Movie target) {
             var context = new ValidationContext(target);
             var results = new List<ValidationResult>();

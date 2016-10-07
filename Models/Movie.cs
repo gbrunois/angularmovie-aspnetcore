@@ -16,7 +16,7 @@ namespace Web.MoviesApi.Models
         public Guid Id { get; set; }
 
         [Required]
-        [StringLength(100, MinimumLength = 1)]
+        [StringLength(500, MinimumLength = 1)]
         [BsonElement("title")]
         public string Title { get; set; }
 
@@ -46,7 +46,7 @@ namespace Web.MoviesApi.Models
         public DateTime LastViewDate { get; set; }
 
         [BsonElement("price")]
-        [Range(1, 100)]
+        [Range(1d, 100d)]
         [DataType(DataType.Currency)]
         public decimal? Price { get; set; }
     }
