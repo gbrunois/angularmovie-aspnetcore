@@ -21,7 +21,7 @@ services:
 
   # web
   web:
-      links:
+      depends_on:
       - mongo
       build:
         context: .
