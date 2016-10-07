@@ -3,7 +3,6 @@ using System.Net;
 using System.Net.Http;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.FileProviders;
 using Web.MoviesApi.Middleware;

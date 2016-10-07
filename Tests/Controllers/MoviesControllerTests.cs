@@ -18,48 +18,48 @@ namespace Web.MoviesApi.Tests.Controllers
         }
 
         [Fact]
-        public void GetMethodShouldReturnAllMovies()
+        public async Task GetMethodShouldReturnAllMovies()
         {
             var movies = CreateMoviesCollection();
             using (MoviesController movieController = new MoviesController(CreateMoviesRepositoryMock(movies)))
             {
-                var result = movieController.Get();
-                Assert.Equal(movies.Length, result.Result.Count());
+                var result = await movieController.Get();
+                Assert.Equal(movies.Length, result.Count());
             }
         }
 
         [Fact]
-        public void GetMethodWithIdArgShouldReturnMovieIdentifiedById()
+        public async Task GetMethodWithIdArgShouldReturnMovieIdentifiedById()
         {
             var movies = CreateMoviesCollection();
             using (MoviesController movieController = new MoviesController(CreateMoviesRepositoryMock(movies)))
             {
                 var movie = movies[0];
-                var result = movieController.Get(movie.Id.ToString()).Result as OkObjectResult;
+                var result = (await movieController.Get(movie.Id.ToString())) as OkObjectResult;
                 Assert.NotNull(result);
                 Assert.Equal(movie, result.Value);
             }
         }
 
         [Fact]
-        public void GetMethodWithUnknownIdArgShouldReturnNotFoundException()
+        public async Task GetMethodWithUnknownIdArgShouldReturnNotFoundException()
         {
             var movies = CreateMoviesCollection();
             using (MoviesController movieController = new MoviesController(CreateMoviesRepositoryMock(movies)))
             {
-                var result = movieController.Get(Guid.NewGuid().ToString()).Result;
+                var result = await movieController.Get(Guid.NewGuid().ToString());
                 Assert.IsType<NotFoundResult>(result);
             }
         }
 
         [Fact]
-        public void PostMethodShouldInsertNewMovie()
+        public async Task PostMethodShouldInsertNewMovie()
         {
             var movies = CreateMoviesCollection();
             using (MoviesController movieController = new MoviesController(CreateMoviesRepositoryMock(movies)))
             {
                 Movie newMovie = new Movie() { Title = "Titre 3" };
-                var result = movieController.Post(newMovie).Result;
+                var result = await movieController.Post(newMovie);
                 Assert.IsType<OkObjectResult>(result);
                 var insertedMovie = ((OkObjectResult)result).Value as Movie;
                 Assert.NotNull(insertedMovie.Id);
@@ -68,7 +68,7 @@ namespace Web.MoviesApi.Tests.Controllers
         }
 
         [Fact]
-        public void PutMethodShouldUpdateExitingMovie()
+        public async Task PutMethodShouldUpdateExitingMovie()
         {
             var movies = CreateMoviesCollection();
             var moviesRepository = CreateMoviesRepositoryMock(movies);
@@ -76,15 +76,15 @@ namespace Web.MoviesApi.Tests.Controllers
             {
                 Movie movie = new Movie() { Id = "1", Title = "Nouveau titre" };
 
-                var result = movieController.Put(movie).Result;
+                var result = await movieController.Put(movie);
                 Assert.IsType<OkResult>(result);
 
-                moviesRepository.Received().UpdateMovie(NSubstitute.Arg.Any<Movie>());
+                await moviesRepository.Received().UpdateMovie(NSubstitute.Arg.Any<Movie>());
             }
         }
 
         [Fact]
-        public void PutMethodWhenMovieDontExistsShouldReturn304HttpError()
+        public async Task PutMethodWhenMovieDontExistsShouldReturn304HttpError()
         {
             var movies = CreateMoviesCollection();
             var moviesRepository = CreateMoviesRepositoryMock(movies);
@@ -92,14 +92,14 @@ namespace Web.MoviesApi.Tests.Controllers
             {
                 Movie movie = new Movie() { Id = "3", Title = "Nouveau titre" };
 
-                var result = movieController.Put(movie).Result;
+                var result = await movieController.Put(movie);
                 Assert.IsType<StatusCodeResult>(result);
                 Assert.Equal(((StatusCodeResult)result).StatusCode, 304);
             }
         }
 
         [Fact]
-        public void PostMethodShouldReturnsBadRequestResult_WhenModelStateIsInvalid()
+        public async Task PostMethodShouldReturnsBadRequestResult_WhenModelStateIsInvalid()
         {
             var movies = CreateMoviesCollection();
             using (MoviesController movieController = new MoviesController(CreateMoviesRepositoryMock(movies)))
@@ -107,14 +107,14 @@ namespace Web.MoviesApi.Tests.Controllers
                 movieController.ModelState.AddModelError("Title", "Required");
 
                 Movie newMovie = new Movie() { Title = "Titre 3" };
-                var result = movieController.Post(newMovie).Result;
+                var result = await movieController.Post(newMovie);
                 
                 Assert.IsType<BadRequestObjectResult>(result);
             }
         }
 
         [Fact]
-        public void PutMethodShouldReturnsBadRequestResult_WhenModelStateIsInvalid()
+        public async Task PutMethodShouldReturnsBadRequestResult_WhenModelStateIsInvalid()
         {
             var movies = CreateMoviesCollection();
             using (MoviesController movieController = new MoviesController(CreateMoviesRepositoryMock(movies)))
@@ -122,7 +122,7 @@ namespace Web.MoviesApi.Tests.Controllers
                 movieController.ModelState.AddModelError("Title", "Required");
 
                 Movie movie = new Movie() { Id = "1", Title = "Nouveau titre" };
-                var result = movieController.Put(movie).Result;
+                var result = await movieController.Put(movie);
                 
                 Assert.IsType<BadRequestObjectResult>(result);
             }
