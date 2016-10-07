@@ -46,9 +46,6 @@ namespace Web.MoviesApi
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseMiddleware<SPAMiddleware>(DEFAULT_FILENAME);
-
-            
             //set default document
             app.UseDefaultFiles(DEFAULT_FILENAME);
 

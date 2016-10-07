@@ -12,6 +12,10 @@ namespace Web.MoviesApi.Tests.Controllers
 {
     public class MoviesControllerTests
     {
+        private readonly Guid _Id1 = Guid.NewGuid();
+        private readonly Guid _Id2 = Guid.NewGuid();
+        private readonly Guid _Id3 = Guid.NewGuid();
+
         public MoviesControllerTests()
         {
 
@@ -63,7 +67,7 @@ namespace Web.MoviesApi.Tests.Controllers
                 Assert.IsType<OkObjectResult>(result);
                 var insertedMovie = ((OkObjectResult)result).Value as Movie;
                 Assert.NotNull(insertedMovie.Id);
-                Assert.NotEqual(string.Empty, insertedMovie.Id);
+                Assert.NotEqual(Guid.Empty, insertedMovie.Id);
             }
         }
 
@@ -74,7 +78,7 @@ namespace Web.MoviesApi.Tests.Controllers
             var moviesRepository = CreateMoviesRepositoryMock(movies);
             using (MoviesController movieController = new MoviesController(moviesRepository))
             {
-                Movie movie = new Movie() { Id = "1", Title = "Nouveau titre" };
+                Movie movie = new Movie() { Id = _Id1, Title = "Nouveau titre" };
 
                 var result = await movieController.Put(movie);
                 Assert.IsType<OkResult>(result);
@@ -90,7 +94,7 @@ namespace Web.MoviesApi.Tests.Controllers
             var moviesRepository = CreateMoviesRepositoryMock(movies);
             using (MoviesController movieController = new MoviesController(moviesRepository))
             {
-                Movie movie = new Movie() { Id = "3", Title = "Nouveau titre" };
+                Movie movie = new Movie() { Id = _Id3, Title = "Nouveau titre" };
 
                 var result = await movieController.Put(movie);
                 Assert.IsType<StatusCodeResult>(result);
@@ -121,7 +125,7 @@ namespace Web.MoviesApi.Tests.Controllers
             {
                 movieController.ModelState.AddModelError("Title", "Required");
 
-                Movie movie = new Movie() { Id = "1", Title = "Nouveau titre" };
+                Movie movie = new Movie() { Id = _Id1, Title = "Nouveau titre" };
                 var result = await movieController.Put(movie);
                 
                 Assert.IsType<BadRequestObjectResult>(result);
@@ -132,11 +136,11 @@ namespace Web.MoviesApi.Tests.Controllers
         {
             return new Movie[] {
                 new Movie() {
-                    Id = "1",
+                    Id = _Id1,
                     Title = "Titre 1"
                 },
                 new Movie() {
-                    Id = "2",
+                    Id = _Id2,
                     Title = "Titre 2"
                 }
                 };
@@ -148,12 +152,12 @@ namespace Web.MoviesApi.Tests.Controllers
 
             substitute.GetMovies().Returns(Task.FromResult(collection));
 
-            substitute.GetMovie(NSubstitute.Arg.Any<string>()).ReturnsForAnyArgs(arg1 => Task.FromResult(collection.Where(movie => movie.Id == arg1.Arg<string>()).FirstOrDefault()));
+            substitute.GetMovie(NSubstitute.Arg.Any<Guid>()).ReturnsForAnyArgs(arg1 => Task.FromResult(collection.Where(movie => movie.Id == arg1.Arg<Guid>()).FirstOrDefault()));
 
             substitute.InsertMovie(NSubstitute.Arg.Any<Movie>()).ReturnsForAnyArgs(arg1 =>
             {
                 var movie = arg1.Arg<Movie>();
-                movie.Id = "3";
+                movie.Id = _Id3;
                 return Task.FromResult(movie);
             });
             substitute.UpdateMovie(NSubstitute.Arg.Any<Movie>()).ReturnsForAnyArgs(arg1 =>

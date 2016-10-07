@@ -44,7 +44,7 @@ namespace Web.MoviesApi.Tests
             // Arrange
             var env = new Microsoft.AspNetCore.Hosting.Internal.HostingEnvironment();
             env.ContentRootPath = Directory.GetCurrentDirectory();
-            
+
             Startup startup = new Startup(env);
             var serviceCollection = new ServiceCollection();
             startup.ConfigureServices(serviceCollection);
@@ -67,7 +67,7 @@ namespace Web.MoviesApi.Tests
 
             IOptions<MongoSettings> mongoSettings = (IOptions<MongoSettings>)serviceCollection.BuildServiceProvider().GetService(typeof(IOptions<MongoSettings>));
 
-            Assert.NotNull(mongoSettings.Value); 
+            Assert.NotNull(mongoSettings.Value);
         }
 
         [Fact]
@@ -81,14 +81,14 @@ namespace Web.MoviesApi.Tests
 
             IOptions<MongoSettings> mongoSettings = (IOptions<MongoSettings>)serviceCollection.BuildServiceProvider().GetService(typeof(IOptions<MongoSettings>));
 
-            Assert.Equal("mongo:27017", mongoSettings.Value.ConnectionString); 
+            Assert.Equal("mongo:27017", mongoSettings.Value.ConnectionString);
         }
 
         [Fact]
         public void Should_MongoSettings_ConnectionString_HaveValueInDevelopmentEnvironment()
         {
             var env = new Microsoft.AspNetCore.Hosting.Internal.HostingEnvironment();
-            env.ContentRootPath = Directory.GetCurrentDirectory();            
+            env.ContentRootPath = Directory.GetCurrentDirectory();
             env.EnvironmentName = "development";
 
             Startup startup = new Startup(env);
@@ -97,7 +97,7 @@ namespace Web.MoviesApi.Tests
 
             IOptions<MongoSettings> mongoSettings = (IOptions<MongoSettings>)serviceCollection.BuildServiceProvider().GetService(typeof(IOptions<MongoSettings>));
 
-            Assert.Equal("192.168.99.100:27017", mongoSettings.Value.ConnectionString); 
+            Assert.Equal("192.168.99.100:27017", mongoSettings.Value.ConnectionString);
         }
     }
 }

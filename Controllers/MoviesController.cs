@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +28,7 @@ namespace Web.MoviesApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
-            var movie = await _moviesDAO.GetMovie(id);
+            var movie = await _moviesDAO.GetMovie(Guid.Parse(id));
             if (movie == null)
             {
                 return NotFound();
@@ -71,7 +72,7 @@ namespace Web.MoviesApi.Controllers
         [HttpDelete("{id}")]
         public async void Delete(string id)
         {
-            await _moviesDAO.DeleteMovie(id);
+            await _moviesDAO.DeleteMovie(Guid.Parse(id));
         }
     }
 }
