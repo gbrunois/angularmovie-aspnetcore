@@ -99,7 +99,7 @@ namespace Web.MoviesApi.Tests.Controllers
         }
 
         [Fact]
-        public void PostMethodShouldReturnsBadRequestResult_WhenModelStateIsInvalid()
+        public async Task PostMethodShouldReturnsBadRequestResult_WhenModelStateIsInvalid()
         {
             var movies = CreateMoviesCollection();
             using (MoviesController movieController = new MoviesController(CreateMoviesRepositoryMock(movies)))
@@ -107,14 +107,14 @@ namespace Web.MoviesApi.Tests.Controllers
                 movieController.ModelState.AddModelError("Title", "Required");
 
                 Movie newMovie = new Movie() { Title = "Titre 3" };
-                var result = movieController.Post(newMovie).Result;
+                var result = await movieController.Post(newMovie);
                 
                 Assert.IsType<BadRequestObjectResult>(result);
             }
         }
 
         [Fact]
-        public void PutMethodShouldReturnsBadRequestResult_WhenModelStateIsInvalid()
+        public async Task PutMethodShouldReturnsBadRequestResult_WhenModelStateIsInvalid()
         {
             var movies = CreateMoviesCollection();
             using (MoviesController movieController = new MoviesController(CreateMoviesRepositoryMock(movies)))
@@ -122,7 +122,7 @@ namespace Web.MoviesApi.Tests.Controllers
                 movieController.ModelState.AddModelError("Title", "Required");
 
                 Movie movie = new Movie() { Id = "1", Title = "Nouveau titre" };
-                var result = movieController.Put(movie).Result;
+                var result = await movieController.Put(movie);
                 
                 Assert.IsType<BadRequestObjectResult>(result);
             }
