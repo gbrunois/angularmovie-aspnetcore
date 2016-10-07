@@ -98,6 +98,36 @@ namespace Web.MoviesApi.Tests.Controllers
             }
         }
 
+        [Fact]
+        public void PostMethodShouldReturnsBadRequestResult_WhenModelStateIsInvalid()
+        {
+            var movies = CreateMoviesCollection();
+            using (MoviesController movieController = new MoviesController(CreateMoviesRepositoryMock(movies)))
+            {
+                movieController.ModelState.AddModelError("Title", "Required");
+
+                Movie newMovie = new Movie() { Title = "Titre 3" };
+                var result = movieController.Post(newMovie).Result;
+                
+                Assert.IsType<BadRequestObjectResult>(result);
+            }
+        }
+
+        [Fact]
+        public void PutMethodShouldReturnsBadRequestResult_WhenModelStateIsInvalid()
+        {
+            var movies = CreateMoviesCollection();
+            using (MoviesController movieController = new MoviesController(CreateMoviesRepositoryMock(movies)))
+            {
+                movieController.ModelState.AddModelError("Title", "Required");
+
+                Movie movie = new Movie() { Id = "1", Title = "Nouveau titre" };
+                var result = movieController.Put(movie).Result;
+                
+                Assert.IsType<BadRequestObjectResult>(result);
+            }
+        }
+
         private Movie[] CreateMoviesCollection()
         {
             return new Movie[] {

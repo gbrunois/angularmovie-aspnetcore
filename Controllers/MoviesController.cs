@@ -41,6 +41,10 @@ namespace Web.MoviesApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]Movie value)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             await _moviesDAO.InsertMovie(value);
             return Ok(value);
         }
@@ -49,6 +53,10 @@ namespace Web.MoviesApi.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]Movie value)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             Movie movie = await _moviesDAO.GetMovie(value.Id);
             if (movie != null)
             {
