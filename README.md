@@ -33,6 +33,8 @@ Librairie de films développée avec AngularJS (fork [https://github.com/Sfeir/a
 * Exécuter <code>dotnet run</code> pour lancer le serveur
 * Exécuter <code>dotnet test</code> pour lancer les tests
 
+* Pour tester l'API: <code>curl -I http://localhost:5000/server/api/movies</code>
+
 ## Troubleshootings
 
 
