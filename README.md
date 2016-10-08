@@ -26,6 +26,7 @@ Librairie de films développée avec AngularJS (fork [https://github.com/Sfeir/a
 * Accéder à l'application via l'adresse [http://localhost:5000](http://localhost:5000)
 
 ## Développement
+* <code>export ASPNETCORE_ENVIRONMENT=development</code>
 * Exécuter <code>docker-compose -f docker-compose.mongo.yml up --build -d</code> pour exécuter l'image docker MongoDB
 * Exécuter <code>dotnet restore</code> pour restaurer les paquets Nuget
 * Exécuter <code>dotnet build</code> pour compiler
