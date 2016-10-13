@@ -44,7 +44,7 @@ namespace Web.MoviesApi.Models
         [BsonElement("lastViewDate")]
         public DateTime LastViewDate { get; set; }
 
-        [Range(1d, 100d)]
+        [Range(1d,100d)]
         [DataType(DataType.Currency)]
         [BsonElement("price")]
         public decimal? Price { get; set; }

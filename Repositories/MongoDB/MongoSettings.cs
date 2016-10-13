@@ -18,7 +18,7 @@ namespace Web.MoviesApi.Repositories.MongoDB
             get;
             set;
         }
-        
+
         public string Password
         {
             get;
