@@ -1,0 +1,27 @@
+language: csharp
+sudo: required
+services:
+  - docker
+
+before_install:
+  - pip install -U docker-compose
+  - sudo sh -c 'echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list' 
+  - sudo apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893
+  - sudo apt-get update
+  - sudo apt-get -y install dotnet-dev-1.0.0-preview2-003121
+  - dotnet --info
+
+install:
+  - dotnet restore
+  - dotnet build
+
+script:
+  - dotnet build
+  - dotnet test
+  - docker-compose up -d --force-recreate
+  - docker-compose ps
+  # - curl -I http://localhost:5000/server/api/movies
+
+after_script:
+  - docker-compose stop
+  - docker-compose rm -f

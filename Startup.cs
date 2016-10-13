@@ -9,6 +9,7 @@ using Web.MoviesApi.Middleware;
 using Web.MoviesApi.Repositories;
 using Web.MoviesApi.Repositories.MongoDB;
 
+
 namespace Web.MoviesApi
 {
     public class Startup
@@ -41,8 +42,11 @@ namespace Web.MoviesApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+
             app.UseMiddleware<SPAMiddleware>(DEFAULT_FILENAME);
-            
+
             //set default document
             app.UseDefaultFiles(DEFAULT_FILENAME);
 
