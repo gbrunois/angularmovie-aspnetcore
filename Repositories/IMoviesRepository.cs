@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Web.MoviesApi.Models;
 
@@ -19,7 +20,7 @@ namespace Web.MoviesApi.Repositories
         /// </summary>
         /// <param name="id">Movie unique identifier</param>
         /// <returns>A movie or null</returns>
-        Task<Movie> GetMovie(string id);
+        Task<Movie> GetMovie(Guid id);
 
         /// <summary>
         /// Insert a new movie
@@ -33,7 +34,7 @@ namespace Web.MoviesApi.Repositories
         /// </summary>
         /// <param name="id">Movie unique identifier</param>
         /// <returns></returns>
-        Task DeleteMovie(string id);
+        Task DeleteMovie(Guid id);
 
         /// <summary>
         /// Update a movie

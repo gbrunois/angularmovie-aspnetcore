@@ -7,6 +7,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Web.MoviesApi.Middleware;
 using Web.MoviesApi.Repositories;
+using Web.MoviesApi.Repositories.MongoDB;
 
 namespace Web.MoviesApi
 {
@@ -17,7 +18,9 @@ namespace Web.MoviesApi
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath);
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
             Configuration = builder.Build();
         }
@@ -27,6 +30,9 @@ namespace Web.MoviesApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
+            services.Configure<MongoSettings>(Configuration.GetSection("Mongo"));
+            
             services.AddMvc();
 
             services.AddTransient<IMoviesRepository, MoviesRepository>();
