@@ -21,7 +21,8 @@
     "MongoDB.Driver": "2.3.0",
     "MongoDB.Driver.Core": "2.3.0",
     "NSubstitute": "2.0.0-rc",
-    "Microsoft.AspNetCore.TestHost": "1.0.0"
+    "Microsoft.AspNetCore.TestHost": "1.0.0",
+    "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0"
   },
   "frameworks": {
     "netcoreapp1.0": {
