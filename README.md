@@ -1,8 +1,8 @@
 AngularMovie ASP.NET Core
 =========================
 
-Ce projet est une introduction à [ASP.NET Core](https://www.microsoft.com/net)
-Le Front est un fork du projet [AngularMovie](https://github.com/Sfeir/angularmovie-300)
+Ce projet est une introduction à [ASP.NET Core](https://www.microsoft.com/net)<br />
+Le Front est un fork du projet [AngularMovie](https://github.com/Sfeir/angularmovie-300)<br />
 Les données sont stockées dans une base MongoDB.
 
 ## Pré-requis
