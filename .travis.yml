@@ -13,15 +13,14 @@ before_install:
 
 install:
   - dotnet restore
-  - dotnet build
+  - dotnet build src/MoviesApi/project.json
+  - dotnet build test/MoviesApi.Tests/project.json
 
 script:
-  - dotnet build
-  - dotnet test
-  - docker-compose up -d --force-recreate
-  - docker-compose ps
-  # - curl -I http://localhost:5000/server/api/movies
+  - cd test/MoviesApi.Tests && dotnet test && cd ../..
+  - docker-compose -f src/MoviesApi/docker-compose.yml up -d --build --force-recreate
+  - docker-compose -f src/MoviesApi/docker-compose.yml ps
 
 after_script:
-  - docker-compose stop
-  - docker-compose rm -f
+  - docker-compose -f src/MoviesApi/docker-compose.yml stop
+  - docker-compose -f src/MoviesApi/docker-compose.yml rm -f

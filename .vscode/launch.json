@@ -6,9 +6,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/bin/Debug/netcoreapp1.0/angularmovie-aspnetcore.dll",
+            "program": "${workspaceRoot}/src/MoviesApi/bin/Debug/netcoreapp1.0/moviesapi.dll",
             "args": [],
-            "cwd": "${workspaceRoot}",
+            "cwd": "${workspaceRoot}/src/MoviesApi",
             "stopAtEntry": false,
             "launchBrowser": {
                 "enabled": true,
@@ -26,9 +26,6 @@
             },
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceRoot}/Views"
             }
         },
         {

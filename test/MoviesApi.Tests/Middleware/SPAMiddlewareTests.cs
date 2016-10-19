@@ -12,6 +12,8 @@ namespace Web.MoviesApi.Tests.Middleware
 {
     public class SPAMiddlewareTests
     {
+        private readonly string _ContentRoot  = Path.Combine(Directory.GetCurrentDirectory(), "../../src/MoviesApi");
+
         public SPAMiddlewareTests()
         {
 
@@ -20,8 +22,6 @@ namespace Web.MoviesApi.Tests.Middleware
         [Fact]
         public async void Should_Always_Serve_DefaultFile()
         {
-            var contentRoot = Directory.GetCurrentDirectory();
-
             //  Arrange
             var hostBuilder = new WebHostBuilder()
                 .Configure(app =>
@@ -30,7 +30,7 @@ namespace Web.MoviesApi.Tests.Middleware
                     app.UseStaticFiles(new StaticFileOptions
                     {
                         //override default directory
-                        FileProvider = new CompositeFileProvider(new PhysicalFileProvider(Path.Combine(contentRoot, "wwwroot/app")))
+                        FileProvider = new CompositeFileProvider(new PhysicalFileProvider(Path.Combine(_ContentRoot, "wwwroot/app")))
                     });
                 });
             // Act

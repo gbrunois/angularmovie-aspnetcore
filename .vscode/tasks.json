@@ -8,10 +8,15 @@
     "tasks": [
         {
             "taskName": "build",
-            "args": [],
+            "args": ["src/MoviesApi/project.json"],
             "isBuildCommand": true,
             "showOutput": "silent",
             "problemMatcher": "$msCompile"
+        },
+        {
+            "taskName": "test",
+            "args": ["test/MoviesApi.Tests/project.json"],
+            "showOutput": "always"
         }
     ]
 }

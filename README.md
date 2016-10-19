@@ -19,14 +19,19 @@ Les données sont stockées dans une base MongoDB.
 
 ## Développement
 * Pré-requis : Installer [.NET Core SDK](https://www.microsoft.com/net/core)
+
 * Pour Mac/Linux <code>./dockerTask.sh dockerComposeMongoBuildUp</code> pour créer et exécuter l'image docker MongoDB
 * Pour Windows <code>powershell.exe -File dockerTask.ps1 -DockerComposeMongoBuildUp</code> pour créer et exécuter l'image docker MongoDB
 
+* Se placer à la racine du projet src/MoviesApi
 * Exécuter <code>npm install</code> pour restaurer les paquets NPM
 * Exécuter <code>dotnet restore</code> pour restaurer les paquets Nuget
 * Exécuter <code>dotnet build</code> pour compiler
 * Exécuter <code>dotnet run</code> pour lancer le serveur
+
+* Se placer à la racine du projet test/MoviesApi.Tests
 * Exécuter <code>dotnet test</code> pour lancer les tests
+
 * Pour tester l'API: <code>curl -I http://localhost:5000/server/api/movies</code>
 
 

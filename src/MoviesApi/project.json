@@ -1,6 +1,4 @@
 {
-  "version": "1.0.0-*",
-  "testRunner": "xunit",
   "buildOptions": {
     "debugType": "portable",
     "emitEntryPoint": true
@@ -17,13 +15,11 @@
     "Microsoft.Extensions.Logging.Console": "1.0.0",
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Configuration.Json": "1.0.0",
-    "Microsoft.Extensions.Options.ConfigurationExtensions":"1.0.0",
+    "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
     "Newtonsoft.Json": "9.0.1",
     "MongoDB.Bson": "2.3.0",
     "MongoDB.Driver": "2.3.0",
     "MongoDB.Driver.Core": "2.3.0",
-    "xunit": "2.2.0-beta2-build3300",
-    "dotnet-test-xunit": "2.2.0-preview2-build1029",
     "NSubstitute": "2.0.0-rc",
     "Microsoft.AspNetCore.TestHost": "1.0.0"
   },
@@ -46,5 +42,6 @@
       "version": "1.0.0-*",
       "imports": "portable-net451+win8"
     }
-  }
+  },
+  "version": "1.0.0"
 }
