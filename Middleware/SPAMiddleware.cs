@@ -25,16 +25,18 @@ namespace Web.MoviesApi.Middleware
 
         public async Task Invoke(HttpContext context)
         {
-            var request = context.Request;
+            var request = context.Request;    
 
-            await _next.Invoke(context);
+            await _next.Invoke(context);        
 
+            //get StatusCode after calling _next method
             if (context.Response.StatusCode == 404
-                && !Path.HasExtension(context.Request.Path.Value))
+                && !Path.HasExtension(context.Request.Path.Value) 
+                && !context.Request.Path.StartsWithSegments("/server/api"))
             {
                 context.Request.Path = _defaultFilename;
                 await _next.Invoke(context);
-            }
+            }            
         }
     }
 }
