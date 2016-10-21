@@ -3,7 +3,6 @@ using System.Net;
 using System.Net.Http;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.FileProviders;
 using Web.MoviesApi.Middleware;
@@ -21,10 +20,41 @@ namespace Web.MoviesApi.Tests.Middleware
         [Fact]
         public async void Should_Always_Serve_DefaultFile()
         {
+            //  Arrange
+            var hostBuilder = CreateWebHostBuilder();
+            // Act
+            using (var server = new TestServer(hostBuilder))
+            {                
+                var requestMessage = new HttpRequestMessage(new HttpMethod("GET"), "home");
+                var responseMessage = await server.CreateClient().SendAsync(requestMessage);
+
+                // Assert
+                Assert.Equal(HttpStatusCode.OK, responseMessage.StatusCode);
+            }
+        }
+
+        [Fact]
+        public async void Should_ReturnNotFoundForApi()
+        {
+            //  Arrange
+            var hostBuilder = CreateWebHostBuilder();
+            // Act
+            using (var server = new TestServer(hostBuilder))
+            {                
+                var requestMessage = new HttpRequestMessage(new HttpMethod("GET"), "server/api/movies/1");
+                var responseMessage = await server.CreateClient().SendAsync(requestMessage);
+
+                // Assert
+                Assert.Equal(HttpStatusCode.NotFound, responseMessage.StatusCode);
+            }
+        }
+
+        private IWebHostBuilder CreateWebHostBuilder()
+        {
             var contentRoot = Directory.GetCurrentDirectory();
 
             //  Arrange
-            var hostBuilder = new WebHostBuilder()
+            return new WebHostBuilder()
                 .Configure(app =>
                 {
                     app.UseMiddleware<SPAMiddleware>("/index.html");
@@ -34,16 +64,7 @@ namespace Web.MoviesApi.Tests.Middleware
                         FileProvider = new CompositeFileProvider(new PhysicalFileProvider(Path.Combine(contentRoot, "wwwroot/app")))
                     });
                 });
-            // Act
-            using (var server = new TestServer(hostBuilder))
-            {
-                
-                var requestMessage = new HttpRequestMessage(new HttpMethod("GET"), "home");
-                var responseMessage = await server.CreateClient().SendAsync(requestMessage);
 
-                // Assert
-                Assert.Equal(responseMessage.StatusCode, HttpStatusCode.OK);
-            }
         }
     }
 }
