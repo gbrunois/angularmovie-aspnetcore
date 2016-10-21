@@ -37,11 +37,5 @@
       "wwwroot"
     ]
   },
-  "tools": {
-    "Microsoft.DotNet.Watcher.Tools": {
-      "version": "1.0.0-*",
-      "imports": "portable-net451+win8"
-    }
-  },
   "version": "1.0.0"
 }
