@@ -14,16 +14,41 @@ namespace Web.MoviesApi.Tests.Middleware
     {
         private readonly string _ContentRoot  = Path.Combine(Directory.GetCurrentDirectory(), "../../src/MoviesApi");
 
-        public SPAMiddlewareTests()
-        {
-
-        }
-
         [Fact]
         public async void Should_Always_Serve_DefaultFile()
         {
             //  Arrange
-            var hostBuilder = new WebHostBuilder()
+            var hostBuilder = CreateWebHostBuilder();
+            // Act
+            using (var server = new TestServer(hostBuilder))
+            {                
+                var requestMessage = new HttpRequestMessage(new HttpMethod("GET"), "home");
+                var responseMessage = await server.CreateClient().SendAsync(requestMessage);
+
+                // Assert
+                Assert.Equal(HttpStatusCode.OK, responseMessage.StatusCode);
+            }
+        }
+
+        [Fact]
+        public async void Should_ReturnNotFoundForApi()
+        {
+            //  Arrange
+            var hostBuilder = CreateWebHostBuilder();
+            // Act
+            using (var server = new TestServer(hostBuilder))
+            {                
+                var requestMessage = new HttpRequestMessage(new HttpMethod("GET"), "server/api/movies/1");
+                var responseMessage = await server.CreateClient().SendAsync(requestMessage);
+
+                // Assert
+                Assert.Equal(HttpStatusCode.NotFound, responseMessage.StatusCode);
+            }
+        }
+
+        private IWebHostBuilder CreateWebHostBuilder()
+        {
+            return new WebHostBuilder()
                 .Configure(app =>
                 {
                     app.UseMiddleware<SPAMiddleware>("/index.html");
@@ -33,16 +58,6 @@ namespace Web.MoviesApi.Tests.Middleware
                         FileProvider = new CompositeFileProvider(new PhysicalFileProvider(Path.Combine(_ContentRoot, "wwwroot/app")))
                     });
                 });
-            // Act
-            using (var server = new TestServer(hostBuilder))
-            {
-                
-                var requestMessage = new HttpRequestMessage(new HttpMethod("GET"), "home");
-                var responseMessage = await server.CreateClient().SendAsync(requestMessage);
-
-                // Assert
-                Assert.Equal(responseMessage.StatusCode, HttpStatusCode.OK);
-            }
         }
     }
 }

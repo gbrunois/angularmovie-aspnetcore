@@ -30,7 +30,8 @@ namespace Web.MoviesApi.Middleware
             await _next.Invoke(context);
 
             if (context.Response.StatusCode == 404
-                && !Path.HasExtension(context.Request.Path.Value))
+                && !Path.HasExtension(context.Request.Path.Value)
+                && !context.Request.Path.StartsWithSegments("/server/api"))
             {
                 context.Request.Path = _defaultFilename;
                 await _next.Invoke(context);
