@@ -10,12 +10,15 @@ namespace Web.MoviesApi.Repositories.MongoDB
 {
     public class MoviesRepository : IMoviesRepository
     {
-        private IMongoDatabase _dbInstance;
         private const string MoviesCollection = "movies";
+
+        private IMongoDatabase _dbInstance;
+        private IMongoCollection<Movie> _collection;
 
         public MoviesRepository(IOptions<MongoSettings> mongoSettings)
         {
             _dbInstance = CreateDatabaseConnection(mongoSettings);
+            _collection = _dbInstance.GetCollection<Movie>(MoviesCollection);
         }
 
         private IMongoDatabase CreateDatabaseConnection(IOptions<MongoSettings> mongoSettings)
@@ -37,32 +40,32 @@ namespace Web.MoviesApi.Repositories.MongoDB
 
         public async Task<Movie[]> GetMovies()
         {
-            var results = await _dbInstance.GetCollection<Movie>(MoviesCollection).Find(x => true).ToListAsync();
+            var results = await _collection.Find(x => true).ToListAsync();
             return results.ToArray();
         }
 
         public async Task<Movie> GetMovie(Guid id)
         {
             var filter = new BsonDocument("_id", id);
-            var results = await _dbInstance.GetCollection<Movie>(MoviesCollection).Find(filter).ToListAsync();
+            var results = await _collection.Find(filter).ToListAsync();
             return results.FirstOrDefault();
         }
 
         public async Task InsertMovie(Movie movie)
         {
-            await _dbInstance.GetCollection<Movie>(MoviesCollection).InsertOneAsync(movie);
+            await _collection.InsertOneAsync(movie);
         }
 
         public async Task DeleteMovie(Guid id)
         {
             var filter = new BsonDocument("_id", id);
-            await _dbInstance.GetCollection<Movie>(MoviesCollection).DeleteOneAsync(filter);
+            await _collection.DeleteOneAsync(filter);
         }
 
         public async Task UpdateMovie(Movie movie)
         {
             var filter = new BsonDocument("_id", movie.Id);
-            await _dbInstance.GetCollection<Movie>(MoviesCollection).ReplaceOneAsync(filter, movie);
+            await _collection.ReplaceOneAsync(filter, movie);
         }
     }
 }
