@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Delete the bin and obj dirs
+rm -rf bin/ obj/
+
+LOCK_FILE=$1
+if [[ "$LOCK_FILE" = "--lock" ]]; then
+    rm project.lock.json
+fi
+
+echo "Cleaning complete..."
